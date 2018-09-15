@@ -19,6 +19,9 @@ before_test:
 test_script:
   - cd src\tools\msvc && vcregress check
 
+after_test:
+  - dir /s tmp_install
+
 on_failure:
   - perl dumpregr.pl
 
