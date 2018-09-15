@@ -31,7 +31,7 @@ elsif (-e "./buildenv.pl")
 # set up the project
 our $config;
 do "config_default.pl";
-do "config.pl" if (-f "src/tools/msvc/config.pl");
+do "config.pl" if (-f "config.pl");
 
 # print "PATH: $_\n" foreach (split(';',$ENV{PATH}));
 
