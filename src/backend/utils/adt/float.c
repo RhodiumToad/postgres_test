@@ -223,17 +223,19 @@ float4in(PG_FUNCTION_ARGS)
 			 * to see if the result is zero or huge.
 			 */
 
-			if (val == 0.0 ||
 #ifdef HUGE_VALF
-				val >= HUGE_VALF || val <= -HUGE_VALF
-#else
-				isinf(val)
-#endif
-				)
+			if (val == 0.0 || val >= HUGE_VALF || val <= -HUGE_VALF)
 				ereport(ERROR,
 						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
 						 errmsg("\"%s\" is out of range for type real",
 								orig_num)));
+#else
+			if (val == 0.0 || isinf(val))
+				ereport(ERROR,
+						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+						 errmsg("\"%s\" is out of range for type real",
+								orig_num)));
+#endif
 		}
 		else
 			ereport(ERROR,
