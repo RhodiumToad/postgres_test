@@ -223,7 +223,7 @@ float4in(PG_FUNCTION_ARGS)
 			 * to see if the result is zero or huge.
 			 */
 
-#ifdef HUGE_VALF
+#if 0
 			if (val == 0.0 || val >= HUGE_VALF || val <= -HUGE_VALF)
 				ereport(ERROR,
 						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
