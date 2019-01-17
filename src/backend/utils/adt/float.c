@@ -267,6 +267,10 @@ float4in(PG_FUNCTION_ARGS)
 				 errmsg("invalid input syntax for type %s: \"%s\"",
 						"real", orig_num)));
 
+	if (val == 0 || isinf(val))
+		elog(WARNING, "float4in returned %s for input \"%s\"",
+			 (val == 0 ? "zero" : "infinite"), orig_str);
+
 	PG_RETURN_FLOAT4(val);
 }
 
