@@ -4,8 +4,7 @@ shallow_clone: true
 
 install:
   - appveyor-retry cinst winflexbison
-  - '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" /help'
-  - '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64'
+  - '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64 8.1'
 
 before_build:
   - rename c:\ProgramData\chocolatey\bin\win_flex.exe flex.exe
@@ -22,8 +21,8 @@ before_test:
 test_script:
   - cd src\tools\msvc && vcregress check
 
-after_test:
-  - dir /s tmp_install
+#after_test:
+#  - dir /s tmp_install
 
 on_failure:
   - perl dumpregr.pl
