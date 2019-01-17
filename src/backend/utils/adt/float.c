@@ -222,7 +222,7 @@ float4in(PG_FUNCTION_ARGS)
 			 * detect whether it's a "real" out-of-range condition by checking
 			 * to see if the result is zero or huge.
 			 */
-
+			elog(WARNING, "float4in ERANGE: val=%g isinf=%s", val, (isinf(val) ? "true" : "false"));
 #if 0
 			if (val == 0.0 || val >= HUGE_VALF || val <= -HUGE_VALF)
 				ereport(ERROR,
