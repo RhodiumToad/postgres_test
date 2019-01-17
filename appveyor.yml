@@ -1,8 +1,11 @@
 #  appveyor.yml
+
+shallow_clone: true
+
 install:
   - appveyor-retry cinst winflexbison
-  - dir "C:\Program Files\Microsoft SDKs\Windows"
-  - '"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64'
+  - tree "C:\Program Files"
+  - '"C:\Program Files\Microsoft SDKs\Windows\v8.1\Bin\SetEnv.cmd" /x64'
   - '"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86_amd64'
 
 before_build:
