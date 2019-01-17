@@ -269,7 +269,7 @@ float4in(PG_FUNCTION_ARGS)
 
 	if (val == 0 || isinf(val))
 		elog(WARNING, "float4in returned %s for input \"%s\"",
-			 (val == 0 ? "zero" : "infinite"), orig_str);
+			 (val == 0 ? "zero" : "infinite"), orig_num);
 
 	PG_RETURN_FLOAT4(val);
 }
