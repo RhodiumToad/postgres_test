@@ -221,8 +221,17 @@ float4in(PG_FUNCTION_ARGS)
 			 * precision).  We'd prefer not to throw error for that, so try to
 			 * detect whether it's a "real" out-of-range condition by checking
 			 * to see if the result is zero or huge.
+			 *
+			 * Use isinf() rather than HUGE_VALF on VS2013 because it generates
+			 * a spurious overflow warning for -HUGE_VALF.
 			 */
-			if (val == 0.0 || val >= HUGE_VALF || val <= -HUGE_VALF)
+			if (val == 0.0 ||
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
+				isinf(val)
+#else
+				(val >= HUGE_VALF || val <= -HUGE_VALF)
+#endif
+				)
 				ereport(ERROR,
 						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
 						 errmsg("\"%s\" is out of range for type real",
