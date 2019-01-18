@@ -1,12 +1,12 @@
 #  appveyor.yml
 
-image: Visual Studio 2015
+image: Visual Studio 2017
 
 shallow_clone: true
 
 install:
   - appveyor-retry cinst winflexbison
-  - '"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64 7 -vcvars_ver=14.0'
+  - '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x86_amd64'
 
 before_build:
   - rename c:\ProgramData\chocolatey\bin\win_flex.exe flex.exe
