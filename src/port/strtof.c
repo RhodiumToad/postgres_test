@@ -74,7 +74,7 @@ pg_strtof(const char *nptr, char **endptr)
 		return fresult;
 	}
 	else if ((*endptr == nptr) ||
-			 (fresult <> 0.0 && !isinf(fresult)))
+			 (fresult != 0.0 && !isinf(fresult)))
 	{
 		/*
 		 * If we got nothing parseable, or if we got a non-0 finite value (or
