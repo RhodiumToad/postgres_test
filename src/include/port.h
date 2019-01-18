@@ -382,7 +382,15 @@ extern int	isinf(double x);
 #endif							/* !HAVE_ISINF */
 
 #ifndef HAVE_STRTOF
+
 extern float strtof(const char *nptr, char **endptr);
+
+#elif defined(_MSC_VER) && (_MSC_VER < 1900)
+
+#define HAVE_BUGGY_WINDOWS_STRTOF 1
+extern float pg_strtof(const char *nptr, char **endptr);
+#define strtof(a,b) (pg_strtof((a),(b)))
+
 #endif
 
 #ifndef HAVE_MKDTEMP
