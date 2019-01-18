@@ -2653,11 +2653,12 @@ static struct config_int ConfigureNamesInt[] =
 		{"extra_float_digits", PGC_USERSET, CLIENT_CONN_LOCALE,
 			gettext_noop("Sets the number of digits displayed for floating-point values."),
 			gettext_noop("This affects real, double precision, and geometric data types. "
-						 "The parameter value is added to the standard number of digits "
-						 "(FLT_DIG or DBL_DIG as appropriate).")
+						 "A zero or negative parameter value is added to the standard "
+						 "number of digits (FLT_DIG or DBL_DIG as appropriate). "
+						 "Any value greater than zero selects round-trip-safe output.")
 		},
 		&extra_float_digits,
-		0, -15, 3,
+		1, -15, 3,
 		NULL, NULL, NULL
 	},
 

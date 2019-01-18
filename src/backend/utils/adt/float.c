@@ -21,6 +21,7 @@
 
 #include "catalog/pg_type.h"
 #include "common/int.h"
+#include "common/shortest_dec.h"
 #include "libpq/pqformat.h"
 #include "miscadmin.h"
 #include "utils/array.h"
@@ -31,7 +32,7 @@
 
 
 /* Configurable GUC parameter */
-int			extra_float_digits = 0; /* Added to DBL_DIG or FLT_DIG */
+int			extra_float_digits = 1; /* Added to DBL_DIG or FLT_DIG */
 
 /* Cached constants for degree-based trig functions */
 static bool degree_consts_set = false;
@@ -281,6 +282,12 @@ float4out(PG_FUNCTION_ARGS)
 	char	   *ascii = (char *) palloc(32);
 	int			ndig = FLT_DIG + extra_float_digits;
 
+	if (extra_float_digits > 0)
+	{
+		float_to_shortest_decimal_buf(num, ascii);
+		PG_RETURN_CSTRING(ascii);
+	}
+
 	(void) pg_strfromd(ascii, 32, ndig, num);
 	PG_RETURN_CSTRING(ascii);
 }
@@ -496,6 +503,12 @@ float8out_internal(double num)
 {
 	char	   *ascii = (char *) palloc(32);
 	int			ndig = DBL_DIG + extra_float_digits;
+
+	if (extra_float_digits > 0)
+	{
+		double_to_shortest_decimal_buf(num, ascii);
+		return ascii;
+	}
 
 	(void) pg_strfromd(ascii, 32, ndig, num);
 	return ascii;
