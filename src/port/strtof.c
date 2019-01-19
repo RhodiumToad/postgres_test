@@ -74,11 +74,12 @@ pg_strtof(const char *nptr, char **endptr)
 		return fresult;
 	}
 	else if ((*endptr == nptr) ||
-			 (fresult != 0.0 && !isinf(fresult)))
+			 ((fresult >= FLT_MIN || fresult <= -FLT_MIN) && !isinf(fresult)))
 	{
 		/*
-		 * If we got nothing parseable, or if we got a non-0 finite value (or
-		 * NaN) without error, then return that to the caller without error.
+		 * If we got nothing parseable, or if we got a non-0 non-subnormal
+		 * finite value (or NaN) without error, then return that to the caller
+		 * without error.
 		 */
 		errno = caller_errno;
 		return fresult;
@@ -100,6 +101,11 @@ pg_strtof(const char *nptr, char **endptr)
 			/* both values are 0 or infinities of the same sign */
 			errno = caller_errno;
 			return fresult;
+		}
+		else if ((dresult > 0 && dresult < FLT_MIN) ||
+				 (dresult < 0 && dresult > -FLT_MIN))
+		{
+			return (float) dresult;
 		}
 		else
 		{
