@@ -25,7 +25,7 @@ before_test:
   - 'perl -p -i.bak -e "s/^test: tablespace/#test: tablespace/" src/test/regress/parallel_schedule'
 
 test_script:
-  - cd src\tools\msvc && vcregress check && vcregress contribcheck
+  - cd src\tools\msvc && vcregress check
 
 #after_test:
 #  - dir /s tmp_install
