@@ -233,10 +233,16 @@ float4in(PG_FUNCTION_ARGS)
 				(val >= HUGE_VALF || val <= -HUGE_VALF)
 #endif
 				)
+			{
+				float fval = (strtof)(num,NULL);
+				double dval = strtod(num,NULL);
+				elog(WARNING, "strtof ERANGE: val=%.18g, fval=%.18g, dval=%.18g", val, fval, dval);
+
 				ereport(ERROR,
 						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
 						 errmsg("\"%s\" is out of range for type real",
 								orig_num)));
+			}
 		}
 		else
 			ereport(ERROR,

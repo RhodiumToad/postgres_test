@@ -122,6 +122,18 @@ SELECT float4send('5382571e-37'::float4);
 SELECT float4send('82381273e-35'::float4);
 SELECT float4send('750486563e-38'::float4);
 
+-- test subnormal input
+
+SELECT float4send('1e-45'::float4);
+SELECT float4send('2e-45'::float4);
+SELECT float4send('3e-45'::float4);
+SELECT float4send('4e-45'::float4);
+SELECT float4send('2.2e-44'::float4);
+SELECT float4send('2.2959e-41'::float4);
+SELECT float4send('1.1754942e-38'::float4);
+-- smallest normal
+SELECT float4send('1.1754944e-38'::float4);
+
 -- test output (and rount-trip safety) of various values.
 -- To ensure we're testing what we think we're testing, start with
 -- float values specified by bit patterns (as a useful side effect,
