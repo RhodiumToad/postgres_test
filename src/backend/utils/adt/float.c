@@ -236,7 +236,7 @@ float4in(PG_FUNCTION_ARGS)
 			{
 				float fval = (strtof)(num,NULL);
 				double dval = strtod(num,NULL);
-				elog(WARNING, "strtof ERANGE: val=%.18g, fval=%.18g, dval=%.18g", val, fval, dval);
+				elog(WARNING, "strtof ERANGE: val=%.18g, fval=%.18g, dval=%.18g, rdval=%.18g", val, fval, dval, (float)dval);
 
 				ereport(ERROR,
 						(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),

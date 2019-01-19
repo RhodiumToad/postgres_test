@@ -323,6 +323,22 @@ with testdata(bits) as (values
   (x'45208b2a2c280290'), (x'45208b2a2c280291'), (x'45208b2a2c280292'),
   --
   (x'7feffffffffffffe'), (x'7fefffffffffffff'),
+  -- round to even tests (+ve)
+  (x'4350000000000002'),
+  (x'4350000000002e06'),
+  (x'4352000000000003'),
+  (x'4352000000000004'),
+  (x'4358000000000003'),
+  (x'4358000000000004'),
+  (x'435f000000000020'),
+  -- round to even tests (-ve)
+  (x'c350000000000002'),
+  (x'c350000000002e06'),
+  (x'c352000000000003'),
+  (x'c352000000000004'),
+  (x'c358000000000003'),
+  (x'c358000000000004'),
+  (x'c35f000000000020'),
   -- these cases come from the upstream's testsuite
   -- LotsOfTrailingZeros)
   (x'3e60000000000000'),

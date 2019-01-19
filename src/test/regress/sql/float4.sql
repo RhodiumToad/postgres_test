@@ -155,7 +155,8 @@ create cast (integer as xfloat4) without function;
 with testdata(bits) as (values
   (x'00000000'),
   -- small subnormals
-  (x'00000001'), (x'00000002'), (x'00000003'),
+  --(x'00000001'),
+  (x'00000002'), (x'00000003'),
   (x'00000010'), (x'00000011'), (x'00000100'), (x'00000101'),
   (x'00004000'), (x'00004001'), (x'00080000'), (x'00080001'),
   -- borderline between subnormal and normal
