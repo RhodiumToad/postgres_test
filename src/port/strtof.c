@@ -58,7 +58,10 @@ strtof(const char *nptr, char **endptr)
  * that returns the correct results for valid input, but may fail to report an
  * error for underflow or overflow, returning 0 instead. Work around that by
  * trying strtod() when strtof() returns 0.0 or [+-]Inf, and calling it an
- * error if the result differs.
+ * error if the result differs. Also, strtof() doesn't handle subnormal input
+ * well, so prefer to round the strtod() result in such cases. (Normally we'd
+ * just say "too bad" if strtof() doesn't support subnormals, but since we're
+ * already in here fixing stuff, we might as well do the best fix we can.)
  */
 float
 pg_strtof(const char *nptr, char **endptr)
@@ -102,8 +105,8 @@ pg_strtof(const char *nptr, char **endptr)
 			errno = caller_errno;
 			return fresult;
 		}
-		else if ((dresult > 0 && dresult < FLT_MIN) ||
-				 (dresult < 0 && dresult > -FLT_MIN))
+		else if ((dresult > 0 && dresult <= FLT_MIN && (float)dresult != 0.0) ||
+				 (dresult < 0 && dresult >= -FLT_MIN && (float)dresult != 0.0))
 		{
 			return (float) dresult;
 		}
