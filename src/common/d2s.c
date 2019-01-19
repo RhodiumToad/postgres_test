@@ -361,7 +361,7 @@ d2d(const uint64 ieeeMantissa, const uint32 ieeeExponent)
 	}
 
 	const bool	even = (m2 & 1) == 0;
-	const bool	acceptBounds = even;
+	const bool	acceptBounds = false;
 
 	/* Step 2: Determine the interval of legal decimal representations. */
 	const uint64 mv = 4 * m2;
