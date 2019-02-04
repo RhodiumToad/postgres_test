@@ -38,4 +38,3 @@ after_failure:
       echo dumping $corefile for $binary
       gdb --batch --quiet -ex "thread apply all bt full" -ex "quit" $binary $corefile
     done
-
